@@ -63,7 +63,7 @@
                         Width="250"
                         Height="40"
                         FontSize="27"
-                        Content="Captcha" />
+                        Content="Captcha" Click="Captchabtn_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center">

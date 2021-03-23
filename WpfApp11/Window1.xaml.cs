@@ -23,10 +23,10 @@ namespace WpfApp11
         {
             InitializeComponent();
         }
-        public Window1(string username)
+        public Window1(Person user)
         {
             InitializeComponent();
-            UserLog.Text = username;
+            UserLog.Text = user.Login;
         }
 
         private void logout_Click(object sender, RoutedEventArgs e)

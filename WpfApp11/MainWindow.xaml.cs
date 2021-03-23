@@ -20,20 +20,22 @@ namespace WpfApp11
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static bool flagLog = false;
-        public static bool flagFail = false;
-        static Users U = new Users();
+        static bool flagLog = false;
+        static bool flagFail = false;
+        List<Person> listUsers = new List<Person>(); 
         public MainWindow()
         {
             InitializeComponent();
-            U.Update();
-            users.Text = String.Join(" ", U.users);
-            passswords.Text = String.Join(" ", U.passwords);
+            listUsers.Add(new Person(0, "Alex", "Admin", "Admin"));
+            listUsers.Add(new Person(1, "Betty", "Bet", "pass"));
+            listUsers.Add(new Person(2, "Casey", "Case", "pass"));
+            listUsers.Add(new Person(3, "Daniel", "Dan", "pass"));
+            listUsers.Add(new Person(4, "Ena", "Ena", "pass"));
             string line = Txt.ReadLine();
             if (!(line == "None"))
             {
                 int id = Convert.ToInt32(line);
-                Window1 window1 = new Window1(U.users[id]);
+                Window1 window1 = new Window1(listUsers[id]);
                 this.Hide();
                 window1.ShowDialog();
                 this.Show();
@@ -45,21 +47,22 @@ namespace WpfApp11
             if (Captchatb.Text == Captchatxt.Text || !flagFail) {
                 bool flag = false;
                 int N = -1;
-                for (int i = 0; i < U.users.Length; i++)
+                for (int i = 0; i < listUsers.Count(); i++)
                 {
-                    string user = U.users[i];
-                    flag = user == Username.Text;
+                    Person user = listUsers[i];
+                    string username = user.Login;
+                    flag = username == Username.Text;
                     if (flag)
                     {
                         N = i;
                         break;
                     }
                 }
-                if (flag && Password.Text == U.passwords[N])
+                if (flag && Password.Text == listUsers[N].Password)
                 {
                     flagFail = false;
                     Captcha.Visibility = Visibility.Hidden;
-                    Window1 window1 = new Window1(U.users[N]);
+                    Window1 window1 = new Window1(listUsers[N]);
                     if (flagLog)
                     {
                         Txt.WriteLine(N.ToString());
@@ -93,6 +96,11 @@ namespace WpfApp11
             {
                 BtnLogd.Content = "X";
             }
+        }
+
+        private void Captchabtn_Click(object sender, RoutedEventArgs e)
+        {
+            Captchatxt.Text = CaptchaClass.GetNew();
         }
     }
 }
